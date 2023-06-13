@@ -39,14 +39,15 @@ function App() {
         </Toolbar>
       </AppBar>
       <Stack padding={8} spacing={2}>
-        <Stack direction={"row"} width={"100%"} alignItems={"center"}>
+        <Stack direction={{xs:'column', md:"row"}} width={"100%"} alignItems={{xs:'start', md:"center"}}>
           <Typography marginRight={2}>Filters:</Typography>
           <Stack
-            direction={"row"}
+            direction={{xs:'column', md:"row"}}
             justifyContent={"space-between"}
             width={"100%"}
+            gap={2}
           >
-            <Stack direction={"row"} spacing={2}>
+            <Stack direction={"row"} gap={2} flexWrap={'wrap'}>
               <FormControl fullWidth sx={{ width: "350px" }}>
                 <InputLabel id="category-label">Category</InputLabel>
                 <Select
@@ -69,7 +70,7 @@ function App() {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ width: "350px" }}>
                 <InputLabel id="sort-label">Sort</InputLabel>
                 <Select
                   labelId={"sort-label"}
@@ -103,7 +104,7 @@ function App() {
           count={Math.ceil(list.length / 8)}
           color="primary"
           onChange={onPaginationChange}
-          sx={{ alignSelf: { sm: "center", md: "end" } }}
+          sx={{ alignSelf: { xs: "center", md: "end" } }}
         />
       </Stack>
     </main>
