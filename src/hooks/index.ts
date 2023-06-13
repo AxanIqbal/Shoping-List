@@ -1,1 +1,1 @@
-export * from "./product-hook";
+export * from './product-hook'
