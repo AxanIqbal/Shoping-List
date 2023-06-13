@@ -46,7 +46,7 @@ function App() {
 
 	return (
 		<main style={{minHeight: '100vh'}}>
-			<AppBar position='static'>
+			<AppBar position='static' sx={{background: 'cadetblue'}}>
 				<Toolbar>
 					<Typography variant={'h4'}>Ahsan Iqbal</Typography>
 				</Toolbar>
