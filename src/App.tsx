@@ -17,11 +17,21 @@ import { useProducts } from './hooks'
 import ProductTile from './components/ProductTile.tsx'
 import { SearchInput } from './components/SearchInput.tsx'
 import { ProductTileSkeleton } from './components/Skeletons.tsx'
+import {EmptyLottie, ErrorLottie, Lottie} from './components/Lottie.tsx'
 
 function App() {
-	const { list, searchList, categories, filterCategory, sortList, isLoading } =
-		useProducts()
+	const {
+		list,
+		searchList,
+		categories,
+		filterCategory,
+		sortList,
+		isLoading,
+		error
+	} = useProducts()
 	const [page, setPage] = useState(0)
+
+	console.log(categories)
 
 	const onPaginationChange = useCallback((_, page: number) => {
 		setPage(page - 1)
@@ -35,7 +45,7 @@ function App() {
 	)
 
 	return (
-		<main>
+		<main style={{minHeight: '100vh'}}>
 			<AppBar position='static'>
 				<Toolbar>
 					<Typography variant={'h4'}>Ahsan Iqbal</Typography>
@@ -46,8 +56,9 @@ function App() {
 					direction={{ xs: 'column', md: 'row' }}
 					width={'100%'}
 					alignItems={{ xs: 'start', md: 'center' }}
+					spacing={2}
 				>
-					<Typography marginRight={2}>Filters:</Typography>
+					<Typography>Filters:</Typography>
 					<Stack
 						direction={{ xs: 'column', md: 'row' }}
 						justifyContent={'space-between'}
@@ -58,15 +69,15 @@ function App() {
 							<FormControl fullWidth sx={{ width: '300px' }}>
 								<InputLabel id='category-label'>Category</InputLabel>
 								<Select
-									// size={"small"}
-									defaultValue={''}
+									size={'small'}
+									defaultValue={'all'}
 									labelId={'category-label'}
 									label={'Category'}
 									onChange={event =>
 										filterCategory(event.target.value as string)
 									}
 								>
-									<MenuItem value={''}>-</MenuItem>
+									<MenuItem value={'all'}>All</MenuItem>
 									{categories.map(category => (
 										<MenuItem key={category} value={category}>
 											{category
@@ -81,7 +92,7 @@ function App() {
 							<FormControl fullWidth sx={{ width: '300px' }}>
 								<InputLabel id='sort-label'>Sort</InputLabel>
 								<Select
-									// size={"small"}
+									size={'small'}
 									labelId={'sort-label'}
 									label={'Sort'}
 									defaultValue={'ASC'}
@@ -106,23 +117,31 @@ function App() {
 					</Stack>
 				</Stack>
 
-				<Box
-					sx={{
-						display: 'flex',
-						flexWrap: 'wrap',
-						alignItems: 'stretch',
-						justifyContent: 'center',
-						gap: 2
-					}}
-				>
-					{isLoading
-						? Array.from(Array(8).keys()).map(value => (
+				{error ? (
+					<ErrorLottie error={error?.data}/>
+				) : (
+					<Box
+						sx={{
+							display: 'flex',
+							flexWrap: 'wrap',
+							alignItems: 'stretch',
+							justifyContent: 'center',
+							gap: 4
+						}}
+					>
+						{isLoading ? (
+							Array.from(Array(8).keys()).map(value => (
 								<ProductTileSkeleton key={value} />
-						  ))
-						: list
+							))
+						) : list.length > 0 ? (
+							list
 								.slice(page * 8, page * 8 + 8)
-								.map(value => <ProductTile product={value} key={value.id} />)}
-				</Box>
+								.map(value => <ProductTile product={value} key={value.id} />)
+						) : (
+							<EmptyLottie/>
+						)}
+					</Box>
+				)}
 				<Pagination
 					count={Math.ceil(list.length / 8)}
 					color='primary'

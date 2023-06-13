@@ -7,7 +7,7 @@ export function useProducts() {
 	const { data, isLoading, error } = useGetAllProductsQuery()
 	const [list, setList] = useState<Product[]>([])
 	const [searchQuery, setSearchQuery] = useState('')
-	const [filterOption, setFilterOption] = useState('')
+	const [filterOption, setFilterOption] = useState('all')
 	const [sortOption, setSortOption] = useState('ASC')
 
 	const categories = useMemo(() => {
@@ -32,7 +32,7 @@ export function useProducts() {
 			filteredList = fuse.search(searchQuery).map(e => e.item)
 		}
 
-		if (filterOption !== '') {
+		if (filterOption !== 'all') {
 			filteredList = filteredList.filter(e => e.category === filterOption)
 		}
 
@@ -45,8 +45,6 @@ export function useProducts() {
 				a.title.localeCompare(b.title)
 			)
 		}
-
-		console.log(filteredList)
 
 		setList(filteredList)
 	}, [data, filterOption, searchQuery, sortOption])
