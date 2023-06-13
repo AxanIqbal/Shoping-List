@@ -20,7 +20,7 @@ function ProductTile({ product }: ProductTileProps) {
         height: "450px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
+        // justifyContent: "space-between",
       }}
     >
       <CardMedia
@@ -38,7 +38,7 @@ function ProductTile({ product }: ProductTileProps) {
             alignItems={"center"}
             spacing={1}
           >
-            <Typography variant={"h6"}>{product.title}</Typography>
+            <Typography variant={"h6"} fontWeight={'bold'}>{product.title}</Typography>
             <Stack alignItems={"end"}>
               {/*<Typography variant={'body2'} color={'red'} fontSize={'11px'}>{(product.price*(product.discountPercentage/100)).toFixed(2)}$ Off</Typography>*/}
               <Typography variant={"body1"}>
@@ -54,8 +54,8 @@ function ProductTile({ product }: ProductTileProps) {
           </Stack>
         </Stack>
       </CardContent>
-      <CardActions>
-        <Typography variant={"subtitle1"}>{product.category}</Typography>
+      <CardActions sx={{marginTop: 'auto'}}>
+        <Typography fontSize={'18px'} sx={{textTransform: 'capitalize'}}>{product.category.replace("-", " ")}</Typography>
       </CardActions>
     </Card>
   );
