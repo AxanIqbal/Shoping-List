@@ -144,9 +144,10 @@ function App() {
 				)}
 				<Pagination
 					count={Math.ceil(list.length / 8)}
+
 					color='primary'
 					onChange={onPaginationChange}
-					sx={{ alignSelf: { xs: 'center', md: 'end' } }}
+					sx={{ alignSelf: { xs: 'center', md: 'end' }, ul: {"& .Mui-selected": {background: 'cadetblue'} }}}
 				/>
 			</Stack>
 		</main>
